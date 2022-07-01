@@ -10,32 +10,26 @@ app.set('view engine', 'handlebars')
 
 const port = process.env.PORT || 3000
 
-app.get('/', (req,res) => {
-    res.type('text/plain')
-    res.send('Travellink');
-})
+app.get('/', (req,res) => res.render('home'))
 
-app.get('/about', (req,res) => {
-    res.type('text/plain')
-    res.send('About Travellink')
-})
+app.get('/about', (req,res) => res.render('about'))
 
 // 404 custom page
 app.use((req, res) => {
-    res.type('text/plain')
     res.status(404)
-    res.send('404 - Not Found')
+    res.render('404')
 })
 
 // 500 custom page
 app.use((err, req, res, next) => {
     console.error(err.message)
-    res.type('text/plain')
     res.status(500)
-    res.send('500 - Server Error')
+    res.render('500')
 })
 
 app.listen(port, () => console.log(
     `Express started on http://localhost:${port};`
     + `press Ctrl-C to terminate.`
 ))
+
+app.use(express.static(__dirname + '/public'))
